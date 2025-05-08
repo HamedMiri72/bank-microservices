@@ -1,0 +1,4 @@
+package com.hamedtech.accounts.mapper;
+
+public class CustomerMapper {
+}
