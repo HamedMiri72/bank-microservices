@@ -1,0 +1,10 @@
+package com.hamedtech.accounts.dto;
+
+public class AccountsDto {
+
+    private Long accountNumber;
+
+    private Long accountType;
+
+    private String branchAddress;
+}
