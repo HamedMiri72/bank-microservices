@@ -2,7 +2,6 @@ package com.hamedtech.accounts.exception;
 
 
 import com.hamedtech.accounts.dto.ErrorResponseDto;
-import org.springframework.boot.actuate.autoconfigure.metrics.MetricsProperties;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
