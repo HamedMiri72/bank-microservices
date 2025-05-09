@@ -2,10 +2,13 @@ package com.hamedtech.accounts.service.impl;
 
 
 import com.hamedtech.accounts.constants.AccountsConstants;
+import com.hamedtech.accounts.dto.AccountsDto;
 import com.hamedtech.accounts.dto.CustomerDto;
 import com.hamedtech.accounts.entity.Accounts;
 import com.hamedtech.accounts.entity.Customer;
 import com.hamedtech.accounts.exception.CustomerAlreadyExistsException;
+import com.hamedtech.accounts.exception.ResourceNotFoundException;
+import com.hamedtech.accounts.mapper.AccountsMapper;
 import com.hamedtech.accounts.mapper.CustomerMapper;
 import com.hamedtech.accounts.repository.AccountsRepository;
 import com.hamedtech.accounts.repository.CustomerRepository;
@@ -16,6 +19,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.Random;
+
 
 @Service
 @AllArgsConstructor
@@ -47,6 +51,8 @@ public class AccountsServiceImpl implements IAccountsService {
         accountsRepository.save(createNewAccounts(savedCustomer));
     }
 
+
+
     private Accounts createNewAccounts(Customer customer) {
 
         Accounts accounts = new Accounts();
@@ -62,4 +68,24 @@ public class AccountsServiceImpl implements IAccountsService {
 
         return accounts;
     }
+
+
+    @Override
+    public CustomerDto fetchAccount(String mobileNumber) {
+
+        Customer customer = customerRepository.findByMobileNumber(mobileNumber)
+                .orElseThrow(()-> new ResourceNotFoundException("Customer", "mobileNumber", mobileNumber));
+
+        Accounts accounts = accountsRepository.findByCustomerId(customer.getCustomerId())
+                .orElseThrow(()-> new ResourceNotFoundException("Account", "customerId", customer.getCustomerId().toString()));
+
+
+        CustomerDto customerDto = CustomerMapper.mapToCustomerDto(customer, new CustomerDto());
+        customerDto.setAccountsDto(AccountsMapper.mapToAccountsDto(accounts, new AccountsDto()));
+
+        return customerDto;
+    }
+
+
+
 }
