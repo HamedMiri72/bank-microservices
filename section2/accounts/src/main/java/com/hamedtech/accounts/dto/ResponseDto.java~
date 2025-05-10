@@ -21,7 +21,7 @@ public class ResponseDto {
 
     @Schema(
             description = "Status code of the response",
-            example = "Request processed successfully"
+            example = "200"
     )
     private String statusMsg;
 }

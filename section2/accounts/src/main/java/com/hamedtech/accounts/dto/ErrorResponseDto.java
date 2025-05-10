@@ -1,6 +1,7 @@
 package com.hamedtech.accounts.dto;
 
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.http.HttpStatus;
@@ -9,14 +10,30 @@ import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
+@Schema(
+        name = "ErrorResponse",
+        description = "Schema to hold error details"
+)
 public class ErrorResponseDto {
 
-    private String apiPath; // which api try to invoke
+    @Schema(
+            description = "API path where error occurred"
+    )
+    private String apiPath;
 
-    private HttpStatus errorCode; // what is the error code
+    @Schema(
+            description = "Status code of the response"
+    )
+    private HttpStatus errorCode;
 
-    private String errorMessage; // what is the error message
+    @Schema(
+            description = "Error message"
+    )
+    private String errorMessage;
 
-    private LocalDateTime errorTime; // what time that error happened
+    @Schema(
+            description = "Time when error occurred"
+    )
+    private LocalDateTime errorTime;
 
 }

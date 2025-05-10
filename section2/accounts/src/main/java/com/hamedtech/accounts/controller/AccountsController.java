@@ -3,9 +3,12 @@ package com.hamedtech.accounts.controller;
 
 import com.hamedtech.accounts.constants.AccountsConstants;
 import com.hamedtech.accounts.dto.CustomerDto;
+import com.hamedtech.accounts.dto.ErrorResponseDto;
 import com.hamedtech.accounts.dto.ResponseDto;
 import com.hamedtech.accounts.service.IAccountsService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -56,7 +59,10 @@ public class AccountsController {
     @Operation(summary = "Update Account REST API", description = "REST API to update Customer and Account inside bank")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "HTTP Status 200 OK"),
-            @ApiResponse(responseCode = "500", description = "HTTP Status 500 INTERNAL SERVER ERROR")
+            @ApiResponse(responseCode = "500", description = "HTTP Status 500 INTERNAL SERVER ERROR",
+            content = @Content(
+                    schema = @Schema(implementation = ErrorResponseDto.class)
+            ))
     })
     @PutMapping("/update")
     public ResponseEntity<ResponseDto> updateAccountDetails(
