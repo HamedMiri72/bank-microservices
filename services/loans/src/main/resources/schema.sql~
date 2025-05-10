@@ -1,0 +1,13 @@
+CREATE TABLE IF NOT EXISTS `loans`(
+    `loan_id` int AUTO_INCREMENT PRIMARY KEY,
+    `mobile_number` varchar(15) NOT NULL,
+    `loan_number` varchar(100) NOT NULL,
+    `loan_type` varchar(100) NOT NULL,
+    `total_loan` int NOT NULL,
+    `amont_paid` int NOT NULL,
+    `outstanding_amount` int NOT NULL,
+    `created_at` date NOT NULL,
+    `created_by` varchar(255) NOT NULL,
+    `updated_at` date Default NULL,
+    `updated_by` varchar(255) Default NULL
+);

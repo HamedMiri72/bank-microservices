@@ -32,7 +32,13 @@ public class AccountsController {
     private IAccountsService iAccountsService;
 
     @Operation(summary = "Create Account REST API", description = "REST API to create Customer and Account inside bank")
-    @ApiResponse(responseCode = "201", description = "HTTP Status 201 CREATED")
+    @ApiResponses({
+            @ApiResponse(responseCode = "201", description = "HTTP Status 201 CREATED"),
+            @ApiResponse(responseCode = "500", description = "HTTP Status 500 INTERNAL SERVER ERROR",
+            content = @Content(
+                    schema = @Schema(implementation = ErrorResponseDto.class)
+            ))
+    })
     @PostMapping("/create")
     public ResponseEntity<ResponseDto> createAccount(
             @RequestBody @Valid CustomerDto customerDto
@@ -44,6 +50,13 @@ public class AccountsController {
                 .body(new ResponseDto(AccountsConstants.STATUS_201, AccountsConstants.MESSAGE_201));
     }
 
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "HTTP Status 200 OK"),
+            @ApiResponse(responseCode = "500", description = "HTTP Status 500 INTERNAL SERVER ERROR",
+            content = @Content(
+                    schema = @Schema(implementation = ErrorResponseDto.class)
+            ))
+    })
     @Operation(summary = "Fetch Account REST API", description = "REST API to fetch Customer and Account inside bank")
     @ApiResponse(responseCode = "200", description = "HTTP Status 200 OK")
     @GetMapping("/fetch")
@@ -59,6 +72,7 @@ public class AccountsController {
     @Operation(summary = "Update Account REST API", description = "REST API to update Customer and Account inside bank")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "HTTP Status 200 OK"),
+            @ApiResponse(responseCode = "417", description = "HTTP Status 417 EXPECTATION FAILED"),
             @ApiResponse(responseCode = "500", description = "HTTP Status 500 INTERNAL SERVER ERROR",
             content = @Content(
                     schema = @Schema(implementation = ErrorResponseDto.class)
@@ -75,15 +89,18 @@ public class AccountsController {
                     .body(new ResponseDto(AccountsConstants.STATUS_200, AccountsConstants.MESSAGE_200));
         }else{
             return ResponseEntity
-                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(new ResponseDto(AccountsConstants.STATUS_500, AccountsConstants.MESSAGE_500));
+                    .status(HttpStatus.EXPECTATION_FAILED)
+                    .body(new ResponseDto(AccountsConstants.STATUS_417, AccountsConstants.MESSAGE_417));
         }
     }
 
     @Operation(summary = "Delete Account REST API", description = "REST API to delete Customer and Account inside bank")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "HTTP Status 200 OK"),
-            @ApiResponse(responseCode = "500", description = "HTTP Status 500 INTERNAL SERVER ERROR")
+            @ApiResponse(responseCode = "417", description = "HTTP Status 417 EXPECTATION FAILED"),
+            @ApiResponse(responseCode = "500", description = "HTTP Status 500 INTERNAL SERVER ERROR",
+            content = @Content(schema = @Schema(implementation = ErrorResponseDto.class) ))
+
     })
     @DeleteMapping("/delete")
     public ResponseEntity<ResponseDto> deleteAccounts(
@@ -98,8 +115,8 @@ public class AccountsController {
                     .body(new ResponseDto(AccountsConstants.STATUS_200, AccountsConstants.MESSAGE_200));
         }else{
             return ResponseEntity
-                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(new ResponseDto(AccountsConstants.STATUS_500, AccountsConstants.MESSAGE_500));
+                    .status(HttpStatus.EXPECTATION_FAILED)
+                    .body(new ResponseDto(AccountsConstants.STATUS_417, AccountsConstants.MESSAGE_417));
         }
     }
 
