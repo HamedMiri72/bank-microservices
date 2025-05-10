@@ -74,12 +74,8 @@ public class AccountsController {
         }
     }
 
-    @Operation(summary = "Delete Account REST API", description = "REST API to delete Customer and Account inside bank")
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "HTTP Status 200 OK"),
-            @ApiResponse(responseCode = "500", description = "HTTP Status 500 INTERNAL SERVER ERROR")
-    })
     @DeleteMapping("/delete")
+
     public ResponseEntity<ResponseDto> deleteAccounts(
             @RequestParam @Pattern(regexp = "(^$|[0-9]{10})",message = "Mobile number must be 10 digits") String mobileNumber
     ){
