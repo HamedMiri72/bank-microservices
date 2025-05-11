@@ -5,6 +5,7 @@ import com.hamedTech.loans.dto.LoansDto;
 import com.hamedTech.loans.dto.ResponseDto;
 import com.hamedTech.loans.service.ILoansService;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -46,5 +47,40 @@ public class LoansController {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(lonaDto);
+    }
+
+    @PutMapping("/update")
+    public ResponseEntity<ResponseDto> updateLoanDetails(
+        @RequestBody @Valid LoansDto loansDto
+    ){
+        boolean isUpdated = iLoansService.updateLoan(loansDto);
+
+        if(isUpdated){
+            return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .body(new ResponseDto(LoansConstants.STATUS_200, LoansConstants.MESSAGE_200));
+        }else{
+            return ResponseEntity
+                    .status(HttpStatus.EXPECTATION_FAILED)
+                    .body(new ResponseDto(LoansConstants.STATUS_417, LoansConstants.MESSAGE_417));
+        }
+
+    }
+
+    @DeleteMapping("/delete")
+    public ResponseEntity<ResponseDto> deleteLoanDetails(
+            @RequestParam @Pattern(regexp = "(^$|[0-9]{10})",message = "Mobile number must be 10 digits") String mobileNumber
+    ) {
+        boolean isDeleted = iLoansService.deleteLoan(mobileNumber);
+
+        if (isDeleted) {
+            return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .body(new ResponseDto(LoansConstants.STATUS_200, LoansConstants.MESSAGE_200));
+        } else {
+            return ResponseEntity
+                    .status(HttpStatus.EXPECTATION_FAILED)
+                    .body(new ResponseDto(LoansConstants.STATUS_417, LoansConstants.MESSAGE_417));
+        }
     }
 }
