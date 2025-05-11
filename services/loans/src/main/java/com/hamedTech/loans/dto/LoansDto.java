@@ -9,7 +9,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
-@AllArgsConstructor
 @Schema(
         name = "Loans",
         description = "Schema to hold loan details"

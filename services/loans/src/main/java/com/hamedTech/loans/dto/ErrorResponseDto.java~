@@ -1,7 +1,17 @@
 package com.hamedTech.loans.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
+import java.time.LocalDateTime;
+
+@Data
+@AllArgsConstructor
+@Schema(
+        name = "ErrorResponse",
+        description = "Schema to hold error details"
+)
 public class ErrorResponseDto {
 
     @Schema(
@@ -19,6 +29,9 @@ public class ErrorResponseDto {
     )
     private String errorMessage;
 
-    private 
+    @Schema(
+            description = "Error time"
+    )
+    private LocalDateTime errorTime;
 
 }

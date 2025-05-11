@@ -6,7 +6,7 @@ import com.hamedTech.loans.entity.Loans;
 public class LoansMapper {
 
     /**
-     * map all the data form loans to loansDto
+     * map all the data from loans to loansDto
      * @param loans
      * @param loansDto
      * @return

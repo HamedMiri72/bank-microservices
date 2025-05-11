@@ -1,6 +1,7 @@
 package com.hamedTech.loans.controller;
 
 import com.hamedTech.loans.constants.LoansConstants;
+import com.hamedTech.loans.dto.LoansDto;
 import com.hamedTech.loans.dto.ResponseDto;
 import com.hamedTech.loans.service.ILoansService;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -34,5 +35,16 @@ public class LoansController {
         return ResponseEntity.
                 status(HttpStatus.CREATED).
                 body(new ResponseDto(LoansConstants.STATUS_201, LoansConstants.MESSAGE_201));
+    }
+
+    @GetMapping("/fetch")
+    public ResponseEntity<LoansDto> fetchLoanDetails(
+            @RequestParam @Pattern(regexp = "(^$|[0-9]{10})",message = "Mobile number must be 10 digits") String mobileNumber){
+
+        LoansDto lonaDto = iLoansService.fetchLoan(mobileNumber);
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(lonaDto);
     }
 }
