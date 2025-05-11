@@ -1,0 +1,24 @@
+package com.hamedTech.loans.dto;
+
+import io.swagger.v3.oas.annotations.media.Schema;
+
+public class ErrorResponseDto {
+
+    @Schema(
+            description = "API path where error occurred"
+    )
+    private String apiPath;
+
+    @Schema(
+            description = "Status code of the response"
+    )
+    private String statusCode;
+
+    @Schema(
+            description = "Error message"
+    )
+    private String errorMessage;
+
+    private 
+
+}
