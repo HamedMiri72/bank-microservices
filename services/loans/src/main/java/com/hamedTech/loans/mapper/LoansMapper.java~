@@ -1,0 +1,4 @@
+package com.hamedTech.loans.mapper;
+
+public class LoansMapper {
+}

@@ -10,7 +10,6 @@ import com.hamedTech.loans.service.ILoansService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.Random;
 
@@ -48,8 +47,6 @@ public class LoansServiceImpl implements ILoansService {
         newloans.setTotalLoan(LoansConstants.NEW_LOAN_LIMIT);
         newloans.setAmountPaid(0);
         newloans.setOutstandingAmount(LoansConstants.NEW_LOAN_LIMIT);
-        newloans.setCreatedAt(LocalDateTime.now());
-        newloans.setCreatedBy("Admin");
         return newloans;
 
     }

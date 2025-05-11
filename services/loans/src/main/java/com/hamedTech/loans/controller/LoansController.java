@@ -1,11 +1,16 @@
 package com.hamedTech.loans.controller;
 
+import com.hamedTech.loans.constants.LoansConstants;
+import com.hamedTech.loans.dto.ResponseDto;
+import com.hamedTech.loans.service.ILoansService;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @AllArgsConstructor
@@ -15,4 +20,19 @@ import org.springframework.web.bind.annotation.RestController;
         name = "CRUD REST APIs for Loans in bank",
         description = "CRUD REST APIs in bank to CREATE, UPDATE, FETCH AND DELETE loan details")
 public class LoansController {
+
+    private ILoansService iLoansService;
+
+    @PostMapping("/create")
+    public ResponseEntity<ResponseDto> createLoan(
+            @RequestParam @Pattern(regexp = "(^$|[0-9]{10})",message = "Mobile number must be 10 digits") String mobileNumber
+    ) {
+
+        iLoansService.createLoan(mobileNumber);
+
+
+        return ResponseEntity.
+                status(HttpStatus.CREATED).
+                body(new ResponseDto(LoansConstants.STATUS_201, LoansConstants.MESSAGE_201));
+    }
 }
