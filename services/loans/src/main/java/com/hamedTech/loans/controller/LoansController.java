@@ -1,9 +1,15 @@
 package com.hamedTech.loans.controller;
 
 import com.hamedTech.loans.constants.LoansConstants;
+import com.hamedTech.loans.dto.ErrorResponseDto;
 import com.hamedTech.loans.dto.LoansDto;
 import com.hamedTech.loans.dto.ResponseDto;
 import com.hamedTech.loans.service.ILoansService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
@@ -25,6 +31,12 @@ public class LoansController {
 
     private ILoansService iLoansService;
 
+    @Operation(summary = "Create Loan REST API", description = "REST API to create Loan inside bank")
+    @ApiResponses({
+        @ApiResponse(responseCode = "201", description = "HTTP Status 201 CREATED"),
+        @ApiResponse(responseCode = "500", description = "HTTP Status 500 INTERNAL SERVER ERROR",
+            content = @Content(schema = @Schema(implementation = ErrorResponseDto.class)))
+    })
     @PostMapping("/create")
     public ResponseEntity<ResponseDto> createLoan(
             @RequestParam @Pattern(regexp = "(^$|[0-9]{10})",message = "Mobile number must be 10 digits") String mobileNumber
@@ -38,6 +50,12 @@ public class LoansController {
                 body(new ResponseDto(LoansConstants.STATUS_201, LoansConstants.MESSAGE_201));
     }
 
+    @Operation(summary = "Fetch Loan REST API", description = "REST API to fetch Loan inside bank")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "HTTP Status 200 OK"),
+            @ApiResponse(responseCode = "500", description = "HTTP Status 500 INTERNAL SERVER ERROR",
+                    content = @Content(schema = @Schema(implementation = ErrorResponseDto.class)))
+    })
     @GetMapping("/fetch")
     public ResponseEntity<LoansDto> fetchLoanDetails(
             @RequestParam @Pattern(regexp = "(^$|[0-9]{10})",message = "Mobile number must be 10 digits") String mobileNumber){
@@ -49,6 +67,13 @@ public class LoansController {
                 .body(lonaDto);
     }
 
+    @Operation(summary = "Update Loan REST API", description = "REST API to update Loan inside bank")
+    @ApiResponses({
+        @ApiResponse(responseCode = "200", description = "HTTP Status 200 OK"),
+        @ApiResponse(responseCode = "417", description = "Expectation Failed"),
+        @ApiResponse(responseCode = "500", description = "HTTP Status 500 INTERNAL SERVER ERROR",
+            content = @Content(schema = @Schema(implementation = ErrorResponseDto.class)))
+    })
     @PutMapping("/update")
     public ResponseEntity<ResponseDto> updateLoanDetails(
         @RequestBody @Valid LoansDto loansDto
@@ -67,6 +92,13 @@ public class LoansController {
 
     }
 
+    @Operation(summary = "Delete Loan REST API", description = "REST API to delete Loan inside bank")
+    @ApiResponses({
+        @ApiResponse(responseCode = "200", description = "HTTP Status 200 OK"),
+        @ApiResponse(responseCode = "417", description = "Expectation Failed"),
+        @ApiResponse(responseCode = "500", description = "HTTP Status 500 INTERNAL SERVER ERROR",
+            content = @Content(schema = @Schema(implementation = ErrorResponseDto.class)))
+    })
     @DeleteMapping("/delete")
     public ResponseEntity<ResponseDto> deleteLoanDetails(
             @RequestParam @Pattern(regexp = "(^$|[0-9]{10})",message = "Mobile number must be 10 digits") String mobileNumber
