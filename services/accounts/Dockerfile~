@@ -1,0 +1,16 @@
+
+#start with a base imagecontaining java runtime
+FROM openjdk:17-jdk-jammy
+
+#Information around who maintains the image
+MAINTAINER https://github.com/hamedmiri72
+
+#add the application's jar file to the image
+COPY target/accounts-0.0.1-SNAPSHOT.jar accounts-0.0.1-SNAPSHOT.jar
+
+#execute the application
+ENTRYPOINT ["java", "-jar", "accounts-0.0.1-SNAPSHOT.jar"]
+
+
+
+
