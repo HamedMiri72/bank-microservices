@@ -1,0 +1,13 @@
+package com.hamedTech.cards.audit;
+
+import org.springframework.data.domain.AuditorAware;
+
+import java.util.Optional;
+
+public class AditAwareImpl implements AuditorAware<String> {
+
+    @Override
+    public String getCurrentAuditor() {
+        return O;
+    }
+}

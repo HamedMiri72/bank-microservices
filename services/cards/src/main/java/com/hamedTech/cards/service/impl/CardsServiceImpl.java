@@ -4,6 +4,8 @@ import com.hamedTech.cards.constants.CardsConstants;
 import com.hamedTech.cards.dto.CardDto;
 import com.hamedTech.cards.entity.Cards;
 import com.hamedTech.cards.exception.CardAlreadyExistsException;
+import com.hamedTech.cards.exception.ResourceNotFoundException;
+import com.hamedTech.cards.mapper.CardsMapper;
 import com.hamedTech.cards.repository.CardsRepository;
 import com.hamedTech.cards.service.ICardsService;
 import lombok.AllArgsConstructor;
@@ -46,16 +48,46 @@ public class CardsServiceImpl implements ICardsService {
 
     @Override
     public CardDto fetchCard(String mobileNumber) {
-        return null;
+        Cards cards = cardsRepository.findByMobileNumber(mobileNumber)
+                .orElseThrow(() -> new ResourceNotFoundException("Card", "MobileNumber", mobileNumber));
+
+
+        return CardsMapper.mapToCardDto(cards, new CardDto());
+
+
     }
 
+    /**
+     * Updates the details of an existing card based on the information provided in the given CardDto.
+     * If a card associated with the provided mobile number does not exist, a ResourceNotFoundException is thrown.
+     *
+     * @param cardDto the data transfer object containing the updated card details,
+     *                such as card number, card type, total limit, amount used, and available amount.
+     * @return true if the card details were successfully updated; false otherwise.
+     * @throws ResourceNotFoundException if no card is found associated with the mobile number provided in the cardDto.
+     */
     @Override
     public boolean updateCard(CardDto cardDto) {
-        return false;
+        boolean isUpdated = false;
+
+        Cards cards = cardsRepository.findByMobileNumber(cardDto.getMobileNumber())
+                .orElseThrow(() -> new ResourceNotFoundException("Card", "MobileNumber", cardDto.getMobileNumber()));
+
+        CardsMapper.mapToCards(cardDto, cards);
+        cardsRepository.save(cards);
+        isUpdated = true;
+        return isUpdated;
     }
 
     @Override
     public boolean deleteCard(String mobileNumber) {
-        return false;
+        boolean isDeleted = false;
+
+        Cards cards = cardsRepository.findByMobileNumber(mobileNumber)
+                .orElseThrow(() -> new ResourceNotFoundException("Card", "MobileNumber", mobileNumber));
+
+        cardsRepository.delete(cards);
+        isDeleted = true;
+        return isDeleted;
     }
 }

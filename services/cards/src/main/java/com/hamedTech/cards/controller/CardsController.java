@@ -2,6 +2,7 @@ package com.hamedTech.cards.controller;
 
 
 import com.hamedTech.cards.constants.CardsConstants;
+import com.hamedTech.cards.dto.CardDto;
 import com.hamedTech.cards.dto.ErrorResponseDto;
 import com.hamedTech.cards.dto.ResponseDto;
 import com.hamedTech.cards.service.ICardsService;
@@ -18,10 +19,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(path = "/api", produces = {MediaType.APPLICATION_JSON_VALUE})
@@ -48,5 +46,70 @@ public class CardsController {
                 return ResponseEntity
                         .status(HttpStatus.CREATED)
                         .body(new ResponseDto(CardsConstants.STATUS_200, CardsConstants.MESSAGE_200));
+        }
+
+        @GetMapping("/fetch")
+        @Operation(summary = "Fetch Card REST API", description = "REST API to fetch Card inside bank")
+        @ApiResponses({
+                @ApiResponse(responseCode = "200", description = "HTTP Status 200 OK"),
+                @ApiResponse(responseCode = "500", description = "HTTP Status 500 INTERNAL SERVER ERROR",
+                        content = @Content(schema = @Schema(implementation = ErrorResponseDto.class)))
+        })
+        public ResponseEntity<CardDto> fetchCard(
+                @RequestParam @Pattern(regexp = "(^$|[0-9]{10})",message = "Mobile number must be 10 digits") String mobileNumber)
+        {
+
+            CardDto cardDto = iCardsService.fetchCard(mobileNumber);
+
+            return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .body(cardDto);
+        }
+
+        @PutMapping("/update")
+        @Operation(summary = "Update Card REST API", description = "REST API to update Card inside bank")
+        @ApiResponses({
+                @ApiResponse(responseCode = "200", description = "HTTP Status 200 OK"),
+                @ApiResponse(responseCode = "417", description = "HTTP Status 417 EXPECTATION FAILED"),
+                @ApiResponse(responseCode = "500", description = "HTTP Status 500 INTERNAL SERVER ERROR",
+                        content = @Content(schema = @Schema(implementation = ErrorResponseDto.class)))
+        })
+        public ResponseEntity<ResponseDto> updateCard(@RequestBody CardDto cardDto){
+
+            boolean isUpdated = iCardsService.updateCard(cardDto);
+
+            if(isUpdated){
+                    return ResponseEntity
+                            .status(HttpStatus.OK)
+                            .body(new ResponseDto(CardsConstants.STATUS_200, CardsConstants.MESSAGE_200));
+            }else{
+                    return ResponseEntity
+                            .status(HttpStatus.EXPECTATION_FAILED)
+                            .body(new ResponseDto(CardsConstants.STATUS_417, CardsConstants.MESSAGE_417));
+            }
+        }
+
+        @DeleteMapping("/delete")
+        @Operation(summary = "Delete Card REST API", description = "REST API to delete Card inside bank")
+        @ApiResponses({
+                @ApiResponse(responseCode = "200", description = "HTTP Status 200 OK"),
+                @ApiResponse(responseCode = "417", description = "HTTP Status 417 EXPECTATION FAILED"),
+                @ApiResponse(responseCode = "500", description = "HTTP Status 500 INTERNAL SERVER ERROR",
+                        content = @Content(schema = @Schema(implementation = ErrorResponseDto.class)))
+        })
+        public ResponseEntity<ResponseDto> deleteCard(
+                @RequestParam @Pattern(regexp = "(^$|[0-9]{10})",message = "Mobile number must be 10 digits") String mobileNumber)
+        {
+                boolean isDeleted = iCardsService.deleteCard(mobileNumber);
+
+                if(isDeleted){
+                        return ResponseEntity
+                                .status(HttpStatus.OK)
+                                .body(new ResponseDto(CardsConstants.STATUS_200, CardsConstants.MESSAGE_200));
+                }else{
+                        return ResponseEntity
+                                .status(HttpStatus.EXPECTATION_FAILED)
+                                .body(new ResponseDto(CardsConstants.STATUS_417, CardsConstants.MESSAGE_417));
+                }
         }
 }
