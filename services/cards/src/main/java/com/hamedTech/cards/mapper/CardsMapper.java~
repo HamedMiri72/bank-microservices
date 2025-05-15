@@ -1,0 +1,15 @@
+package com.hamedTech.cards.mapper;
+
+import com.hamedTech.cards.dto.CardDto;
+import com.hamedTech.cards.entity.Cards;
+
+public class CardsMapper {
+
+
+    public static CardDto mapToCardDto(Cards cards, CardDto cardDto) {
+
+        
+
+
+    }
+}
