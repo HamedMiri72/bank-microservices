@@ -10,7 +10,7 @@ public interface ICardsService {
      * @param mobileNumber the mobile number to associate with the new card
      * @return null, as this method does not produce a result
      */
-    Void createCard(String mobileNumber);
+    void createCard(String mobileNumber);
 
     /**
      * Fetches the card details associated with the provided mobile number.

@@ -1,4 +1,0 @@
-package com.hamedTech.cards.service;
-
-public interface ICardsService {
-}

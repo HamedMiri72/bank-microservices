@@ -1,0 +1,22 @@
+package com.hamedTech.cards.controller;
+
+
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.info.Info;
+import lombok.AllArgsConstructor;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping(path = "/api", produces = {MediaType.APPLICATION_JSON_VALUE})
+@AllArgsConstructor
+@OpenAPIDefinition(
+        info = @Info(
+                title = "Cards API",
+                version = "1.0",
+                description = "Cards API"
+        )
+)
+public class CardsController {
+}

@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.http.HttpStatus;
 
 import java.time.LocalDateTime;
 
@@ -26,7 +27,7 @@ public class ErrorResponseDto {
 
     @Schema(
             description = "Status code of the response")
-    private String statusCode;
+    private HttpStatus statusCode;
 
     @Schema(
         description = "Error message"
