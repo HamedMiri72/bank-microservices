@@ -14,6 +14,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +22,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@AllArgsConstructor
 @Validated
 @RequestMapping(path = "/api", produces = {MediaType.APPLICATION_JSON_VALUE})
 @Tag(
@@ -29,7 +29,14 @@ import org.springframework.web.bind.annotation.*;
         description = "CRUD REST APIs in bank to CREATE, UPDATE, FETCH AND DELETE loan details")
 public class LoansController {
 
-    private ILoansService iLoansService;
+    private final ILoansService iLoansService;
+
+    public LoansController(ILoansService iLoansService) {
+        this.iLoansService = iLoansService;
+    }
+
+    @Value("${build.version}")
+    private String buildVersion;
 
     @Operation(summary = "Create Loan REST API", description = "REST API to create Loan inside bank")
     @ApiResponses({
@@ -114,5 +121,19 @@ public class LoansController {
                     .status(HttpStatus.EXPECTATION_FAILED)
                     .body(new ResponseDto(LoansConstants.STATUS_417, LoansConstants.MESSAGE_417));
         }
+    }
+
+    @Operation(summary = "Get Build Version REST API", description = "REST API to get Build Version inside bank")
+    @ApiResponses({
+        @ApiResponse(responseCode = "200", description = "HTTP Status 200 OK"),
+        @ApiResponse(responseCode = "500", description = "HTTP Status 500 INTERNAL SERVER ERROR",
+            content = @Content(schema = @Schema(implementation = ErrorResponseDto.class)))
+    })
+    @GetMapping("/bulid-info")
+    public ResponseEntity<String> getBuildVersion(){
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(buildVersion);
     }
 }
