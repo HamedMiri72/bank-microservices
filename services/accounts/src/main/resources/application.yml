@@ -20,3 +20,12 @@ server:
 
 build:
   version: "1.0"
+
+accounts:
+  message: "Welcome to Bank accounts related local APIs"
+  contactDetails:
+    name: "Hamed miri"
+    email: "hamedmiri72@gmail"
+  onCallSupport:
+    - (555) 555-1234
+    - (555) 555-1345

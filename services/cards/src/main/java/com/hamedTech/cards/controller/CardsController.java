@@ -3,6 +3,7 @@ package com.hamedTech.cards.controller;
 
 import com.hamedTech.cards.constants.CardsConstants;
 import com.hamedTech.cards.dto.CardDto;
+import com.hamedTech.cards.dto.CardsContactInfoDto;
 import com.hamedTech.cards.dto.ErrorResponseDto;
 import com.hamedTech.cards.dto.ResponseDto;
 import com.hamedTech.cards.service.ICardsService;
@@ -39,6 +40,9 @@ public class CardsController {
 
         @Autowired
         private Environment environment;
+
+        @Autowired
+        private CardsContactInfoDto cardsContactInfoDto;
 
 
         @PostMapping("/create")
@@ -153,5 +157,20 @@ public class CardsController {
                 return ResponseEntity
                         .status(HttpStatus.OK)
                         .body(environment.getProperty("JAVA_HOME") + " " + environment.getProperty("MAVEN_HOME"));
+        }
+
+        @Operation(summary = "Get Contact Info REST API", description = "REST API to get Contact Info inside bank")
+        @ApiResponses({
+                @ApiResponse(responseCode = "200", description = "HTTP Status 200 OK"),
+                @ApiResponse(responseCode = "500", description = "HTTP Status 500 INTERNAL SERVER ERROR",
+                        content = @Content(
+                                schema = @Schema(implementation = ErrorResponseDto.class)
+                        ))
+        })
+        @GetMapping("/contact-info")
+        public ResponseEntity<CardsContactInfoDto> getContactInfo(){
+                return ResponseEntity
+                        .status(HttpStatus.OK)
+                        .body(cardsContactInfoDto);
         }
 }

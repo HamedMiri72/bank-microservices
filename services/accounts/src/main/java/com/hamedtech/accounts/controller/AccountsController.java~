@@ -2,6 +2,7 @@ package com.hamedtech.accounts.controller;
 
 
 import com.hamedtech.accounts.constants.AccountsConstants;
+import com.hamedtech.accounts.dto.AccountsContactInfoDto;
 import com.hamedtech.accounts.dto.CustomerDto;
 import com.hamedtech.accounts.dto.ErrorResponseDto;
 import com.hamedtech.accounts.dto.ResponseDto;
@@ -33,8 +34,6 @@ public class AccountsController {
 
     private final IAccountsService iAccountsService;
 
-    // This way we can autowire only the constructor with IAccountsService.
-    // Other fields will not be autowired unlike when using @AllArgsConstructor.
     public AccountsController(IAccountsService iAccountsService) {
         this.iAccountsService = iAccountsService;
     }
@@ -45,6 +44,9 @@ public class AccountsController {
 
     @Autowired
     private Environment environment;
+
+    @Autowired
+    private AccountsContactInfoDto accountsContactInfoDto;
 
 
 
@@ -165,7 +167,23 @@ public class AccountsController {
     public ResponseEntity<String> getJavaVersion(){
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(environment.getProperty("JAVA_HOME") + environment.getProperty("MAVEN_HOME"));
+                .body(environment.getProperty("JAVA_HOME") + " " + environment.getProperty("MAVEN_HOME"));
     }
+
+    @Operation(summary = "Get Contact Info", description = "Contact info deteaild that can be reached out in case of any issues")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "HTTP Status 200 OK"),
+            @ApiResponse(responseCode = "500", description = "HTTP Status 500 INTERNAL SERVER ERROR",
+                    content = @Content(
+                            schema = @Schema(implementation = ErrorResponseDto.class)
+                    ))
+    })
+    @GetMapping("/contact-info")
+    public ResponseEntity<String> getContactInfo(){
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(accountsContactInfoDto);
+    }
+
 
 }

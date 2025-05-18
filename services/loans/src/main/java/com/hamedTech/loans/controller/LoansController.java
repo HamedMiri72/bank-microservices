@@ -2,6 +2,7 @@ package com.hamedTech.loans.controller;
 
 import com.hamedTech.loans.constants.LoansConstants;
 import com.hamedTech.loans.dto.ErrorResponseDto;
+import com.hamedTech.loans.dto.LoansContactInfoDto;
 import com.hamedTech.loans.dto.LoansDto;
 import com.hamedTech.loans.dto.ResponseDto;
 import com.hamedTech.loans.service.ILoansService;
@@ -42,6 +43,9 @@ public class LoansController {
 
     @Autowired
     private Environment environment;
+
+    @Autowired
+    private LoansContactInfoDto loansContactInfoDto;
 
     @Operation(summary = "Create Loan REST API", description = "REST API to create Loan inside bank")
     @ApiResponses({
@@ -155,5 +159,19 @@ public class LoansController {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(environment.getProperty("JAVA_HOME") + " " + environment.getProperty("MAVEN_HOME"));
+    }
+
+    @Operation(summary = "Get Contact Info REST API", description = "REST API to get Contact Info inside bank")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "HTTP Status 200 OK"),
+            @ApiResponse(responseCode = "500", description = "HTTP Status 500 INTERNAL SERVER ERROR",
+                    content = @Content(schema = @Schema(implementation = ErrorResponseDto.class)))
+    })
+    @GetMapping("/contact-info")
+    public ResponseEntity<LoansContactInfoDto> getContactDetails(){
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(loansContactInfoDto);
     }
 }
