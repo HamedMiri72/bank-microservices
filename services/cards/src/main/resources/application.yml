@@ -15,15 +15,24 @@ spring:
     console:
       path: /h2-console
       enabled: true
+  config:
+    import:
+      - "application_qa.yml"
+      - "application_prod.yml"
+  profiles:
+    active:
+      - "prob"
+
 
 server:
   port: 9000
 
 build:
-  version: 1.0
+  version: "3.0"
+
 
 cards:
-  message: "Welcome to cards microservice"
+  message: "Welcome to cards microservice local APIs"
   contactDetails:
     name: "Hamed Miri"
     email: "hamedmiri72@gmailcom"

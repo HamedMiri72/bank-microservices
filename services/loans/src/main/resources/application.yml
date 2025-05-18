@@ -14,11 +14,17 @@ spring:
   h2:
     console:
       enabled: true
+  config:
+    import:
+      - "application_qa.yml"
+      - "application_prod.yml"
+  profiles:
+    active: qa
 server:
   port: 8090
 
 build:
-  version: "1.0"
+  version: "3.0"
 
 loans:
   message: "Welcome to cards microservice"
