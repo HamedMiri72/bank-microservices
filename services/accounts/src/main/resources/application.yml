@@ -1,6 +1,13 @@
+server:
+  port: 8080
+
 spring:
   application:
-    name: accounts
+    name: "accounts"
+  profiles:
+    active: "prod"
+  config:
+    import: "optional:configserver:http://localhost:8071/"
   datasource:
     url: jdbc:h2:mem:testdb
     driver-class-name: org.h2.Driver
@@ -14,25 +21,5 @@ spring:
   h2:
     console:
       enabled: true
-  config:
-    import:
-      - "application_qa.yml"
-      - "application_prod.yml"
-  profiles:
-    active:
-      - "qa"
 
-server:
-  port: 8080
 
-build:
-  version: "3.0"
-
-accounts:
-  message: "Welcome to Bank accounts related local APIs"
-  contactDetails:
-    name: "Hamed miri"
-    email: "hamedmiri72@gmail"
-  onCallSupport:
-    - (555) 555-1234
-    - (555) 555-1345
