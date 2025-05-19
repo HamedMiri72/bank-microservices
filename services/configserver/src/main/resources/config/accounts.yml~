@@ -1,0 +1,38 @@
+spring:
+  application:
+    name: accounts
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driver-class-name: org.h2.Driver
+    username: hamedmiri
+    password: 85192577
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  h2:
+    console:
+      enabled: true
+  config:
+    import:
+      - "accounts_qa.yml"
+      - "accounts_prod.yml"
+  profiles:
+    active:
+      - "qa"
+
+server:
+  port: 8080
+
+build:
+  version: "3.0"
+
+accounts:
+  message: "Welcome to Bank accounts related local APIs"
+  contactDetails:
+    name: "Hamed miri"
+    email: "hamedmiri72@gmail"
+  onCallSupport:
+    - (555) 555-1234
+    - (555) 555-1345

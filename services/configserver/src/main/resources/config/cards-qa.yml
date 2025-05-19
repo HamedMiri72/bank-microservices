@@ -1,0 +1,12 @@
+
+build:
+  version: "2.0"
+
+cards:
+  message: "Welcome to Bank accounts related QA APIs"
+  contactDetails:
+    name: "sonny kumar- QA Lead"
+    email: "sonnykumar72@gmail"
+  onCallSupport:
+    - (555) 555-1238
+    - (555) 555-1340

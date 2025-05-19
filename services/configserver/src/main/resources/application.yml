@@ -1,0 +1,20 @@
+
+spring:
+  application:
+    name: configserver
+  profiles:
+    active: native
+#    whenever we use a class path to store our configuration files
+  cloud:
+    config:
+      server:
+        native:
+          search-locations: "classpath:/config"
+
+
+
+
+server:
+  port: 8071
+
+

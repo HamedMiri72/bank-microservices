@@ -1,0 +1,13 @@
+
+build:
+  version: "3.0"
+
+loans:
+  message: "Welcome to cards microservice"
+  contactDetails:
+    name: "Hamed Miri"
+    email: "hamedmiri72@gmailcom"
+  onCallSupport:
+    - (735) 584-8222
+    - (735) 584-8223
+
