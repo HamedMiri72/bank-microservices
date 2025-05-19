@@ -32,7 +32,7 @@ build:
 
 
 cards:
-  message: "Welcome to cards microservice"
+  message: "Welcome to cards microservice local APIs"
   contactDetails:
     name: "Hamed Miri"
     email: "hamedmiri72@gmailcom"
