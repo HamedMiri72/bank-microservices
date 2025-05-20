@@ -1,7 +1,4 @@
 
-server:
-  port: 8080
-
 build:
   version: "3.0"
 
