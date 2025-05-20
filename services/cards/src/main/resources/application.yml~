@@ -1,6 +1,8 @@
 spring:
   application:
-    name: cards
+    name: "cards"
+  profiles:
+    active: "qa"
   datasource:
     url: jdbc:h2:mem:testdb
     driver-class-name: org.h2.Driver
@@ -16,26 +18,14 @@ spring:
       path: /h2-console
       enabled: true
   config:
-    import:
-      - "application_qa.yml"
-      - "application_prod.yml"
-  profiles:
-    active:
-      - "prob"
+    import: "optional:configserver:http://localhost:8071/"
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"  
+#        for refreshing endpoints
 
 
 server:
   port: 9000
-
-build:
-  version: "3.0"
-
-
-cards:
-  message: "Welcome to cards microservice local APIs"
-  contactDetails:
-    name: "Hamed Miri"
-    email: "hamedmiri72@gmailcom"
-  onCallSupport:
-    - (735) 584-8222
-    - (735) 584-8223

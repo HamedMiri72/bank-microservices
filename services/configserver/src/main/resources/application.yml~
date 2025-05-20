@@ -22,15 +22,20 @@ spring:
 #          search-locations: "file:///D://banck-config"
 
 
-encrypt:
-/* <<<<<<<<<<<<<<  ✨ Windsurf Command ⭐ >>>>>>>>>>>>>>>> */
-  key-store:
-    location: classpath:keystore.jks
-    password: changeit
-    alias: config-server
-/* <<<<<<<<<<  78f252ee-8a13-4663-9297-7271dd0aeeaa  >>>>>>>>>>> */
-  key:
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  health:
+    readinessstate:
+      enabled: true
+    livenessstate:
+      enabled: true
 
+
+encrypt:
+  key: "34g5645fdgd44353@/sdjfw387429"
 
 
 server:
