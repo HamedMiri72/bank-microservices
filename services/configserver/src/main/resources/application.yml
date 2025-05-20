@@ -3,14 +3,27 @@ spring:
   application:
     name: configserver
   profiles:
-    active: native
-#    whenever we use a class path to store our configuration files
+    active: git
+  #    active: native
+    # we use native just for class path and file system location
+    #whenever we use a class path to store our configuration files
   cloud:
     config:
       server:
-        native:
-          search-locations: "classpath:/config"
+        git:
+          uri: https://github.com/HamedMiri72/bank-config.git
+          default-label: main
+          timeout: 5
+          #should only wait for 5 secend after thatthrow an error
+          clone-on-start: true
+          force-pull: true
+#        native:
+#          search-locations: "classpath:/config"
+#          search-locations: "file:///D://banck-config"
 
+
+encrypt:
+  key: "34g5645fdgd44353@/sdjfw387429"
 
 
 
