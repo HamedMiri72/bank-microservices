@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS `caeds`(
+CREATE TABLE IF NOT EXISTS `cards`(
     `card_id` int AUTO_INCREMENT PRIMARY KEY,
     `mobile_number` varchar(15) NOT NULL,
     `card_number` varchar(100) NOT NULL,

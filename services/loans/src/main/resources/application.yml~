@@ -1,29 +1,26 @@
 spring:
   application:
-    name: "cards"
+        name: "loans"
   profiles:
-    active: "prod"
+    active: "qa"
   datasource:
-    url: jdbc:mysql://localhost:3304/cardsdb
+    url: jdbc:mysql://localhost:3303/loansdb
     username: root
     password: root
   jpa:
     show-sql: true
-  sql:
-    init:
-      mode: always
+    sql:
+      init:
+        mode: always
   config:
     import: "optional:configserver:http://localhost:8071/"
-
-
 
 management:
   endpoints:
     web:
       exposure:
         include: "*"
-#        for refreshing endpoints
-
 
 server:
-  port: 9000
+  port: 8090
+
