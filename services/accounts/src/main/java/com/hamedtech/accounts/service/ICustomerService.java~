@@ -1,0 +1,12 @@
+package com.hamedtech.accounts.service;
+
+import com.hamedtech.accounts.dto.CustomerDetailsDto;
+
+public interface ICustomerService {
+
+
+    /**
+     *
+     */
+    CustomerDetailsDto fetchCustomerDetails(String mobileNumber);
+}

@@ -1,0 +1,61 @@
+package com.hamedtech.accounts.service.impl;
+
+import com.hamedtech.accounts.dto.AccountsDto;
+import com.hamedtech.accounts.dto.CardDto;
+import com.hamedtech.accounts.dto.CustomerDetailsDto;
+import com.hamedtech.accounts.dto.LoansDto;
+import com.hamedtech.accounts.entity.Accounts;
+import com.hamedtech.accounts.entity.Customer;
+import com.hamedtech.accounts.exception.ResourceNotFoundException;
+import com.hamedtech.accounts.mapper.AccountsMapper;
+import com.hamedtech.accounts.mapper.CustomerMapper;
+import com.hamedtech.accounts.repository.AccountsRepository;
+import com.hamedtech.accounts.repository.CustomerRepository;
+import com.hamedtech.accounts.service.ICustomerService;
+import com.hamedtech.accounts.service.client.CardsFeignClient;
+import com.hamedtech.accounts.service.client.LoanesFeginClient;
+import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+
+
+@Service
+@AllArgsConstructor
+public class CustomerServiceImpl implements ICustomerService {
+
+
+    private AccountsRepository accountsRepository;
+
+    private CustomerRepository customerRepository;
+
+    private CardsFeignClient cardsFeignClient;
+
+    private LoanesFeginClient loanesFeginClient;
+    /**
+     * Fetches customer details based on the provided mobile number.
+     *
+     * @param mobileNumber The mobile number of the customer whose details are to be fetched.
+     * @return A CustomerDetailsDto object containing the details of the customer, including their account, card, and loan information.
+     */
+    @Override
+    public CustomerDetailsDto fetchCustomerDetails(String mobileNumber) {
+
+        Customer customer = customerRepository.findByMobileNumber(mobileNumber)
+                .orElseThrow(() -> new ResourceNotFoundException("Customer", "MobileNumber", mobileNumber));
+
+        Accounts accounts = accountsRepository.findByCustomerId(customer.getCustomerId())
+                .orElseThrow(() -> new ResourceNotFoundException("Accounts", "CustomerId", customer.getCustomerId().toString()));
+
+        CustomerDetailsDto customerDetailsDto = CustomerMapper.mapToCustomerDetailsDto(customer, new CustomerDetailsDto());
+
+        customerDetailsDto.setAccountsDto(AccountsMapper.mapToAccountsDto(accounts, new AccountsDto()));
+
+        ResponseEntity<LoansDto> loansDtoResponseEntity = loanesFeginClient.fetchLoanDetails(mobileNumber);
+        customerDetailsDto.setLoansDto(loansDtoResponseEntity.getBody());
+        ResponseEntity<CardDto> cardDtoResponseEntity = cardsFeignClient.fetchCard(mobileNumber);
+        customerDetailsDto.setCardsDto(cardDtoResponseEntity.getBody());
+
+        return customerDetailsDto;
+
+    }
+}
