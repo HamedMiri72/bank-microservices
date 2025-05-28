@@ -21,17 +21,7 @@ public class GatewayserverApplication {
 						.path("bank/accounts/**")
 						.filters(f -> f
 								.rewritePath("/bank/accounts/(?<segment>.*)", "/${segment}"))
-						.uri("lb://ACCOUNTS"))
-				.route(p -> p
-						.path("/bank/cards/**")
-						.filters(f -> f
-								.rewritePath("/bank/cards/(?<segment>.*)", "/${segment}"))
-						.uri("lb://CARDS"))
-				.route(p -> p
-						.path("/bank/loans/**")
-						.filters(f-> f.rewritePath("/bank/loans/(?<segment>.*)", "/${segment}"))
-						.uri("lb://LOANS"))
-				.build();
+						.uri("lb://ACCOUNTS")
 
 
 	}
