@@ -10,6 +10,7 @@
         <option value="$PROJECT_DIR$/services/cards/pom.xml" />
         <option value="$PROJECT_DIR$/services/configserver/pom.xml" />
         <option value="$PROJECT_DIR$/services/eurekaserver/pom.xml" />
+        <option value="$PROJECT_DIR$/services/gatewayserver/pom.xml" />
       </list>
     </option>
   </component>

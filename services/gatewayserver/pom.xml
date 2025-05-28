@@ -11,6 +11,7 @@
 	<groupId>com.hamedTech</groupId>
 	<artifactId>gatewayserver</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
 	<name>gatewayserver</name>
 	<description>edge server for bank microservices</description>
 	<url/>
