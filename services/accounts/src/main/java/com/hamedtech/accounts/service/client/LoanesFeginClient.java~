@@ -1,7 +1,6 @@
 package com.hamedtech.accounts.service.client;
 
 import com.hamedtech.accounts.dto.LoansDto;
-import jakarta.validation.constraints.Pattern;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,6 +11,6 @@ public interface LoanesFeginClient {
 
 
     @GetMapping(value = "api/fetch", consumes = "application/json")
-    public ResponseEntity<LoansDto> fetchLoanDetails(
+    public ResponseEntity<LoansDto> fetchLoanDetails(@Req
             @RequestParam String mobileNumber);
 }

@@ -12,5 +12,5 @@ public interface ICustomerService {
      * @return a CustomerDetailsDto object containing the customer's personal, account, loan,
      *         and card details
      */
-    CustomerDetailsDto fetchCustomerDetails(String mobileNumber);
+    CustomerDetailsDto fetchCustomerDetails(String mobileNumber, String correlationId);
 }

@@ -59,3 +59,9 @@ eureka:
     register-with-eureka: true
     serviceUrl:
       defaultZone: http://localhost:8070/eureka/
+
+logging:
+  level:
+    com:
+      hamedTech:
+        accounts: DEBUG
