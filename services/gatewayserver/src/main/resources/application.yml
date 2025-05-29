@@ -31,4 +31,10 @@ info:
     description: "Gateway Server"
     version: "1.0.0"
 
+logging:
+  level:
+    com:
+      hamedTech:
+        gatewayserver: DEBUG
+
 
