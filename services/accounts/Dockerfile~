@@ -1,6 +1,6 @@
 
 #start with a base imagecontaining java runtime
-FROM openjdk:17-jdk-jammy
+FROM openjdk:17-jdk-slim
 
 #Information around who maintains the image
 MAINTAINER https://github.com/hamedmiri72

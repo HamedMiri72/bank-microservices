@@ -222,12 +222,6 @@ services:
           condition: service_healthy
         eurekaserver:
           condition: service_healthy
-        accounts:
-          condition: service_healthy
-        loans:
-          condition: service_healthy
-        cards:
-          condition: service_healthy
       #        loansdb:
       #          condition: service_healthy
       deploy:

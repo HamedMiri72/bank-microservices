@@ -23,6 +23,11 @@ management:
   info:
     env:
       enabled: true
+  health:
+    livenessstate:
+      enabled: true
+    readinessstate:
+      enabled: true
 
 
 info:
@@ -33,5 +38,10 @@ info:
 
 logging:
   level:
+    com:
+      hamedTech:
+        gatewayserver: DEBUG
+
+
 
 
