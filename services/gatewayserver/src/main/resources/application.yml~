@@ -23,11 +23,6 @@ management:
   info:
     env:
       enabled: true
-  health:
-    livenessstate:
-      enabled: true
-    readinessstate:
-      enabled: true
 
 
 info:
@@ -42,6 +37,13 @@ logging:
       hamedTech:
         gatewayserver: DEBUG
 
+resilience4j.circutbreaker:
+  configs:
+    default:
+      sliding-window-size: 10
+      permitted-number-of-calls-in-half-open-state: 2
+      failure-rate-threshold: 50
+      wait-duration-in-open-state: 10000
 
 
 

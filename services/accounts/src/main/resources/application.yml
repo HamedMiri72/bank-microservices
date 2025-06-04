@@ -26,6 +26,10 @@ spring:
   sql:
     init:
       mode: always
+  cloud:
+    openfeign:
+      circuitbreaker:
+          enabled: true
 
 
 
@@ -73,3 +77,11 @@ logging:
     com:
       hamedTech:
         accounts: DEBUG
+resilience4j:
+  circuitbreaker:
+    configs:
+      default:
+        sliding-window-size: 10
+        permitted-number-of-calls-in-half-open-state: 2
+        failure-rate-threshold: 50
+        wait-duration-in-open-state: 10000

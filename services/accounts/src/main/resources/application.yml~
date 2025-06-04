@@ -26,7 +26,10 @@ spring:
   sql:
     init:
       mode: always
-
+  cloud:
+    openfeign:
+      circuitbreaker:
+          enabled: true
 
 
 management:
@@ -40,12 +43,11 @@ management:
     livenessstate:
       enabled: true
   endpoint:
+    shutdown:
+      enabled: true
     health:
       probes:
         enabled: true
-  endpoint:
-    shutdown:
-      enabled: true
   info:
     env:
       enabled: true
