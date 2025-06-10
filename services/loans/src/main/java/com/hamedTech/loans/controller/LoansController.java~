@@ -79,6 +79,7 @@ public class LoansController {
     public ResponseEntity<LoansDto> fetchLoanDetails(@RequestHeader("bank-correlation-id") String correlationId,
             @RequestParam @Pattern(regexp = "(^$|[0-9]{10})",message = "Mobile number must be 10 digits") String mobileNumber){
 
+        logger.debug("bank-correlation-id found: {}", correlationId);
         LoansDto lonaDto = iLoansService.fetchLoan(mobileNumber);
 
         return ResponseEntity
@@ -172,7 +173,8 @@ public class LoansController {
     })
     @GetMapping("/contact-info")
     public ResponseEntity<LoansContactInfoDto> getContactDetails(){
-
+        logger.debug("Invalid Loans contact-info API");
+        throw new RuntimeException();
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(loansContactInfoDto);

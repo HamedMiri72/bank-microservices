@@ -173,9 +173,10 @@ public class LoansController {
     })
     @GetMapping("/contact-info")
     public ResponseEntity<LoansContactInfoDto> getContactDetails(){
-
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(loansContactInfoDto);
+        logger.debug("Invalid Loans contact-info API");
+        throw new RuntimeException();
+//        return ResponseEntity
+//                .status(HttpStatus.OK)
+//                .body(loansContactInfoDto);
     }
 }
