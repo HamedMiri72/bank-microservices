@@ -47,6 +47,10 @@ management:
     health:
       probes:
         enabled: true
+    metrics:
+  metrics:
+    tags:
+      application: ${spring.application.name}
 
 endpoints:
   shutdown:

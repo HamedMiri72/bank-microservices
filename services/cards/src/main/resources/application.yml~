@@ -33,13 +33,24 @@ management:
       exposure:
         include: "*"
 #        for refreshing endpoints
+  health:
+    livenessstate:
+      enabled: true
+    readinessstate:
+      enabled: true
   info:
     env:
       enabled: true
   endpoint:
     shutdown:
-      access: unrestricted
+      enabled: true
+    health:
+      probes:
+        enabled: true
 
+endpoints:
+  shutdown:
+    enabled: true
 
 server:
   port: 9000
