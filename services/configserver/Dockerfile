@@ -3,9 +3,17 @@ FROM openjdk:17-jdk-slim
 MAINTAINER "hamedmiri72"
 
 
+WORKDIR /app
+
 # Install curl (for Docker healthcheck to work)
 RUN apt-get update && apt-get install -y curl && apt-get clean
 
-COPY target/configserver-0.0.1-SNAPSHOT.jar configserver-0.0.1-SNAPSHOT.jar
+RUN mkdir -p /app/otel
+
+COPY target/configserver-0.0.1-SNAPSHOT.jar .
+
+COPY opentelemetry-javaagent.jar /app/otel/opentelemetry-javaagent.jar
+
+ENV JAVA_TOOL_OPTIONS="-javaagent:/app/otel/opentelemetry-javaagent.jar"
 
 ENTRYPOINT ["java", "-jar", "configserver-0.0.1-SNAPSHOT.jar"]

@@ -47,6 +47,10 @@ management:
     health:
       probes:
         enabled: true
+    metrics:
+  metrics:
+    tags:
+      application: ${spring.application.name}
 
 endpoints:
   shutdown:
@@ -76,3 +80,5 @@ logging:
     com:
       hamedTech:
         cards: DEBUG
+  pattern:
+    level: %5p[${spring.application.name},%X{traceId},%X{spanId}]

@@ -17,6 +17,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
@@ -30,6 +32,7 @@ import org.springframework.web.bind.annotation.*;
 @Tag(name = "CRUD REST APIs for Cards in bank", description = "CRUD REST APIs for Cards in bank")
 public class CardsController {
 
+        public static final Logger logger = LoggerFactory.getLogger(CardsController.class);
         private final ICardsService iCardsService;
 
         public CardsController(ICardsService iCardsService) {
@@ -69,10 +72,10 @@ public class CardsController {
                 @ApiResponse(responseCode = "500", description = "HTTP Status 500 INTERNAL SERVER ERROR",
                         content = @Content(schema = @Schema(implementation = ErrorResponseDto.class)))
         })
-        public ResponseEntity<CardDto> fetchCard(
+        public ResponseEntity<CardDto> fetchCard(@RequestHeader("bank-correlation-id") String correlationId,
                 @RequestParam @Pattern(regexp = "(^$|[0-9]{10})",message = "Mobile number must be 10 digits") String mobileNumber)
         {
-
+            logger.debug("bank-correlation-id found: {}", correlationId);
             CardDto cardDto = iCardsService.fetchCard(mobileNumber);
 
             return ResponseEntity
