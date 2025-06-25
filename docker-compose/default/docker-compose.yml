@@ -93,7 +93,7 @@ services:
 
 
     tempo:
-      image: grafana/tempo:latest
+      image: grafana/tempo:2.6.1
       container_name: tempo
       command:
         -config.file=/etc/tempo/config.yml
@@ -297,9 +297,11 @@ services:
       networks:
         - bank-microservice
       environment:
-        OTEL_SERVICE_NAME: configserver
+        JAVA_TOOL_OPTIONS: "-javaagent:/app/libs/opentelemetry-javaagent.jar"
         OTEL_EXPORTER_OTLP_ENDPOINT: http://tempo:4317
         OTEL_METRICS_EXPORTER: none
+        OTEL_LOGS_EXPORTER: none
+
 
 
     eurekaserver:
@@ -325,8 +327,11 @@ services:
       environment:
         SPRING_APPLICATION_NAME: "eurekaserver"
         OTEL_SERVICE_NAME: eurekaserver
+        JAVA_TOOL_OPTIONS: "-javaagent:/app/libs/opentelemetry-javaagent.jar"
         OTEL_EXPORTER_OTLP_ENDPOINT: http://tempo:4317
         OTEL_METRICS_EXPORTER: none
+        OTEL_LOGS_EXPORTER: none
+
         SPRING_CONFIG_IMPORT: "configserver:http://configserver:8071"
 
     accounts:
@@ -359,10 +364,12 @@ services:
         EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://eurekaserver:8070/eureka"
         SPRING_PROFILES_ACTIVE: default
         SPRING_APPLICATION_NAME: "accounts"
-        OTEL_SERVICE_NAME: accounts
+        JAVA_TOOL_OPTIONS: "-javaagent:/app/libs/opentelemetry-javaagent.jar"
         OTEL_EXPORTER_OTLP_ENDPOINT: http://tempo:4317
         OTEL_METRICS_EXPORTER: none
-#        SPRING_DATASOURCE_URL: "jdbc:mysql://accountsdb:3305/accountsdb"
+        OTEL_LOGS_EXPORTER: none
+
+  #        SPRING_DATASOURCE_URL: "jdbc:mysql://accountsdb:3305/accountsdb"
 
 
 
@@ -395,10 +402,12 @@ services:
         EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://eurekaserver:8070/eureka"
         SPRING_PROFILES_ACTIVE: default
         SPRING_APPLICATION_NAME: "cards"
-        OTEL_SERVICE_NAME: cards
+        JAVA_TOOL_OPTIONS: "-javaagent:/app/libs/opentelemetry-javaagent.jar"
         OTEL_EXPORTER_OTLP_ENDPOINT: http://tempo:4317
         OTEL_METRICS_EXPORTER: none
-#        SPRING_DATASOURCE_URL: "jdbc:mysql://cardsdb:3305/cardsdb"
+        OTEL_LOGS_EXPORTER: none
+
+  #        SPRING_DATASOURCE_URL: "jdbc:mysql://cardsdb:3305/cardsdb"
 
     loans:
       image: "hamedmiri72/loans:s11"
@@ -430,10 +439,13 @@ services:
         SPRING_PROFILES_ACTIVE: default
         SPRING_APPLICATION_NAME: "loans"
         OTEL_SERVICE_NAME: loans
+        JAVA_TOOL_OPTIONS: "-javaagent:/app/libs/opentelemetry-javaagent.jar"
         OTEL_EXPORTER_OTLP_ENDPOINT: http://tempo:4317
         OTEL_METRICS_EXPORTER: none
+        OTEL_LOGS_EXPORTER: none
 
-#        SPRING_DATASOURCE_URL: "jdbc:mysql://loansdb:3305/loansdb"
+
+  #        SPRING_DATASOURCE_URL: "jdbc:mysql://loansdb:3305/loansdb"
 
 #    loans1:
 #      image: "hamedmiri72/loans:s9"
@@ -489,8 +501,12 @@ services:
         EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://eurekaserver:8070/eureka"
         SPRING_APPLICATION_NAME: "gatewayserver"
         OTEL_SERVICE_NAME: gatewayserver
+        JAVA_TOOL_OPTIONS: "-javaagent:/app/libs/opentelemetry-javaagent.jar"
         OTEL_EXPORTER_OTLP_ENDPOINT: http://tempo:4317
         OTEL_METRICS_EXPORTER: none
+        OTEL_LOGS_EXPORTER: none
+#        OTEL_INSTRUMENTATION_LOGGING_MDC_ENABLED: true
+
   #        SPRING_DATASOURCE_URL: "jdbc:mysql://loansdb:3305/loansdb"
 
 
