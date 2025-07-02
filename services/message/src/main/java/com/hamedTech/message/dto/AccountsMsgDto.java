@@ -1,4 +1,16 @@
 package com.hamedTech.message.dto;
 
-public record AccountsMsgDto() {
+/**
+ *
+ * @param accountNumber
+ * @param name
+ * @param email
+ * @param mobileNumber
+ */
+public record AccountsMsgDto(
+        long accountNumber,
+        String name,
+        String email,
+        String mobileNumber
+) {
 }
